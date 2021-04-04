@@ -20,7 +20,7 @@ class TestCreateUser(unittest.TestCase):
         app.config['TESTING'] = True
         cls.app = app.test_client()
         cls.headers = {'Content-Type': 'application/json', 'User-Id': "asd",
-        'Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTc1NDc0NTEsInZhbCI6InJvY2UuYWRtaUBnbWFpbC5jb20ifQ.7F8Zgta-jRYfpy4-kG-HFvEXfXDwuE5PheOnL12aPAk'}
+        'Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTc1ODc5NjQsInZhbCI6InJvY2UuYWRtaUBnbWFpbC5jb20ifQ.1Ro-wlFYLL9FtG-iEKzNqg_90L58wORVb4jwvG1Ev18'}
         cls.url = "http://localhost:8080/app_ip"
 
     @classmethod
