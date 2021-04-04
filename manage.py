@@ -39,7 +39,7 @@ def before_request_function():
         if not validation_token[0] or (not SecurityToken().verify_exist_token()):
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": "Token Invalid"
                 })
             return results
 
