@@ -1,0 +1,90 @@
+{
+   "register": {
+      "tableName": "registerip",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "string"
+         },
+         "ip": {
+            "dbName": "ip",
+            "type": "string"
+         },
+         "country": {
+            "dbName": "country",
+            "type": "string"
+         },
+         "distance": {
+            "dbName": "distance",
+            "type": "integer"
+         },
+         "invocation": {
+            "dbName": "invocation",
+            "type": "integer"
+         }
+      }
+   },
+   "user":{
+      "tableName": "user",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         }
+      }
+   },
+   "security":{
+      "tableName": "security",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "token": {
+            "dbName": "token",
+            "type": "string"
+         },
+         "active": {
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
+   },
+   "userLog":{
+      "tableName": "log_user",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "user_log": {
+            "dbName": "user_log",
+            "type": "string"
+         },
+         "date_log": {
+            "dbName": "date_log",
+            "type": "dateTime"
+         }
+      }
+   }
+}

@@ -1,0 +1,364 @@
+---
+  swagger: '2.0'
+  info:
+    description: This is a microservice in Python about ApiIp
+    version: 1.0.0
+    title: Api Ip Service Microservices
+  tags:
+    - name: Api Ip
+      description: ''
+    - name: Grids
+      description: Service methods that provide data to build grids on the graphic interface
+  schemes:
+    - http
+  paths:
+    /get_ip:
+      get:
+          tags:
+            - "Get Ip"
+          summary: "Get Ip"
+          operationId: "get_ip"
+          description: "Get Ip"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: "query"
+              type: "string"
+              name: "ip"
+              required: true 
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_ip'
+          x-swagger-router-controller: "project.views.app_ip"
+    /get_country:
+      get:
+          tags:
+            - "Get Country"
+          summary: "Get Country"
+          operationId: "get_country"
+          description: "Get Country"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_ip'
+          x-swagger-router-controller: "project.views.app_ip"
+    /close_session:
+      get:
+          tags:
+            - "Login"
+          summary: "Create"
+          operationId: "close_session"
+          description: "close_session"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_close'
+          x-swagger-router-controller: "project.views.login"
+    /create_user:
+      post:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "create_user"
+          description: "Create"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: user
+              required: true
+              schema:
+                  $ref: '#/definitions/CreateUser'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"      
+    /login:
+      post:
+          tags:
+            - "Login"
+          summary: "Login"
+          operationId: "login"
+          description: "Login"
+          produces:
+            - "application/json"
+          parameters:
+            - in: body
+              name: login
+              required: false
+              schema:
+                  $ref: '#/definitions/UserLogin'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_login'
+          x-swagger-router-controller: "project.views.login"                           
+  definitions:
+    result_close:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "string"
+          example: "[]"
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseCloseSession'
+        method:
+          type: "string"
+    result_ip:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/AppIp'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    result_user:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "string"
+          example: "[]"
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/resultCreate'
+        method:
+          type: "string"
+    result_login:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Login_result'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"            
+    InformationIp:
+      description: "InformationIp."
+      type: "object"
+      properties:
+        belong_AWS:
+          type: "boolean"
+          example: true
+        country:
+          type: "string"
+          example: "España"
+        date:
+          type: "string"
+          example: "2021-04-03T23:25:58.226344"
+        estimated_distance:
+          type: "integer"
+          example: 10252
+        ip:
+          type: "string"
+          example: "83.44.196.93"  
+        iso_code:
+          type: "string"
+          example: "ES"    
+    UserLogin:
+      description: "Login Users."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "admi"
+        password:
+          type: "string"
+          example: "123asd"
+    Login_result:
+      description: "Login"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "admi"
+        role:
+          type: "integer"
+          example: 1
+        token:
+          type: "string"
+          example: "admi"          
+    AppIp:
+      description: "App Ip"
+      type: "object"
+      properties:
+        role:
+          type: "array"
+          items:
+            $ref: '#/definitions/InformationIp' 
+    CreateUser:
+      description: "Role Security"
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        password:
+          type: "string"
+          example: "123"
+    result_authenticated:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/authenticated'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    authenticated:
+      description: "Role Security"
+      type: "object"
+      properties:
+        authenticator:
+          type: "boolean"
+          example: "true"
+    responseCloseSession:
+      description: "Role Security"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "boolean"
+          example: "true"
+    resultCreate:
+      description: "resultCreate"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "string"
+          example: "usuario creado"
+    result_users:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Users'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    responseDetail:
+      description: "responseDetail"
+      type: "object"
+      properties:
+        code:
+          type: "string"
+          example: "404"
+        name:
+          type: "string"
+          example: "Error"  
+    Users:
+      description: "User"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
+      
