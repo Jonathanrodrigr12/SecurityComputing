@@ -16,7 +16,7 @@ RUN pip install pipenv
 COPY Pipfile* /tmp/
 RUN cd /tmp && pipenv lock --requirements > requirements.txt
 RUN pip install -r /tmp/requirements.txt
-RUN pip install gevent==1.2.2 gunicorn==19.7.1 pycryptodome==3.9.7 cryptography===2.9.2 pysftp==0.2.9
+RUN pip install gevent==1.2.2 gunicorn==19.7.1 pycryptodome==3.9.7 cryptography===2.9.2 geopy==2.1.0
 ADD . $APP_HOME
 
 RUN mkdir $DATABASE_DIR
