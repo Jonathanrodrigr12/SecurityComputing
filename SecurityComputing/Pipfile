@@ -21,7 +21,7 @@ flask = "*"
 
 [dev-packages]
 requests-mock = "*"
-coverage = "==4.5.4"
+coverage = ">=4.5.4"
 pytest = "*"
 pytest-cov = "*"
 pylint = "*"
@@ -30,4 +30,4 @@ tox = "*"
 bandit = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.7"

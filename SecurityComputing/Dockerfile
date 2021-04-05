@@ -1,4 +1,4 @@
-FROM python:3.6.4-alpine3.7
+FROM python:3.7-alpine
 
 RUN apk add --update curl gcc g++ git libffi-dev openssl-dev python3-dev build-base linux-headers \
     && rm -rf /var/cache/apk/*
@@ -14,8 +14,34 @@ WORKDIR $APP_HOME
 RUN pip install --upgrade pip
 RUN pip install pipenv
 COPY Pipfile* /tmp/
-RUN cd /tmp && pipenv lock --requirements > requirements.txt
-RUN pip install -r /tmp/requirements.txt
+RUN apk add --update \
+  build-base \
+  cairo \
+  cairo-dev \
+  cargo \
+  freetype-dev \
+  gcc \
+  gdk-pixbuf-dev \
+  gettext \
+  jpeg-dev \
+  lcms2-dev \
+  libffi-dev \
+  musl-dev \
+  openjpeg-dev \
+  openssl-dev \
+  pango-dev \
+  poppler-utils \
+  postgresql-client \
+  postgresql-dev \
+  py-cffi \
+  python3-dev \
+  rust \
+  tcl-dev \
+  tiff-dev \
+  tk-dev \
+  zlib-dev
+RUN cd /tmp && pipenv lock --requirements > requirements3.txt  
+RUN pip install -r /tmp/requirements3.txt
 RUN pip install gevent==1.2.2 gunicorn==19.7.1 pycryptodome==3.9.7 cryptography===2.9.2 geopy==2.1.0
 ADD . $APP_HOME
 

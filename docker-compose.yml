@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: postgres
+    container_name: postgres_ip
+    volumes:
+      - ./scripts/1-createtables.sql:/docker-entrypoint-initdb.d/1-createtables.sql
+      - ./scripts/2-insert-data.sql:/docker-entrypoint-initdb.d/2-insert-data.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - 9932:5432
+  api:
+    depends_on:
+      - db  
+    build:
+      context: .
+      dockerfile: SecurityComputing/Dockerfile  
