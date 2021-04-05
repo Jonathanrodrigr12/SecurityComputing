@@ -5,7 +5,6 @@ from datetime import datetime
 from flask import g, request
 from flask_cors import CORS
 from flask_script import Manager
-from flask_mail import Mail
 
 from datetime import datetime
 from flask import g, request, Response, send_from_directory
@@ -90,24 +89,10 @@ def after_request_function(response):
 app.config["CORS_HEADERS"] = "Content-Type"
 cors = CORS(app, resources={r"/app_ip/*": {"origins": "*"}})
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'digitaltasa@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Abc.123@?'
-app.config['MAIL_DEBUG '] = True
-app.config['TESTING'] = False
-
 app.response_class = ResponseWrapper
 
-uploads_dir = os.path.join(app.root_path, 'images')
-if not (os.path.exists(uploads_dir)):
-    os.makedirs(uploads_dir)
-
 manager = Manager(app)
-
-mail = Mail(app)
+      
 
 if __name__ == "__main__":
     manager.run()

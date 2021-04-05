@@ -13,10 +13,16 @@ services:
       POSTGRES_PASSWORD: admin123
     ports:
       - 9932:5432
+    networks:
+      - api2  
   api:
     container_name: api_ip
     depends_on:
-      - db  
-    build:
-      context: .
-      dockerfile: SecurityComputing/Dockerfile  
+      - db
+    ports:
+      - 5040:5000
+    build: .
+    networks:
+      - api2
+networks:
+    api2:
