@@ -11,7 +11,7 @@ pyms:
     APP_VERSION: "1.0"
     APPLICATION_ROOT : "/app_ip"
     CONNECTIONS_STRINGS:
-      POSTGRESQL_CONNECTION: "postgres,pg8000,postgres:root@localhost:5432/app,schema=ml"
+      POSTGRESQL_CONNECTION: "postgres,pg8000,@localhost:5432/app,schema=ml"
     DEBUG: true
     SECRET_KEY: "gjr39dkjn344_!67#"
     TESTING: true
@@ -21,3 +21,8 @@ pyms:
     PRIVATE_KEY: "secret"
     ALGORITHMS: "HS256"
     KEY_PRIVATE: "ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM1Pg="
+    KEY_REGION: "https://restcountries.eu/rest/v2/alpha/"
+    KEY_IP_AWS: "https://ip-ranges.amazonaws.com/ip-ranges.json"
+    KEY_INFO_IP: "https://api.ip2country.info/ip?"
+    USER: postgres
+    PASSWORD: root

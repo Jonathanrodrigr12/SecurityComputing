@@ -10,9 +10,9 @@ def get_ip(ip):
         return result
     return result
 
-def get_country():
+def get_country(name):
     try:
-        result = AppIpService().get_country()
+        result = AppIpService().get_country(name)
     except Exception as exception:
         result = exception.args[0]
         return result

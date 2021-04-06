@@ -1,5 +1,6 @@
 from project.resources.utils.requets_api import RequestApi
 import json
+import string
 from datetime import datetime
 from geopy.distance import distance
 from project.resources.utils.security_token import SecurityToken 
@@ -47,7 +48,7 @@ class AppIpService:
             "belong_AWS": validation_ip
 
         }
-        self.insert_log(data)
+        self.insert_log(data, region['translations']['es'])
         result['data'].append(data)
 
         return result
@@ -61,10 +62,10 @@ class AppIpService:
         distance_calculated = distance(coordinate_argen['latlng'], distance_source)
         return round(distance_calculated.kilometers)
     
-    def insert_log(self, data):
+    def insert_log(self, data, name):
         data_insert = {
             "ip": data['ip'],
-            "country": data['country'].split(" ")[0],
+            "country": name,
             "distance": data['estimated_distance']
         }
 
@@ -80,7 +81,7 @@ class AppIpService:
         else:                    
             self.__repository_register.insert(data_insert)
 
-    def get_country(self):
+    def get_country(self, name):
         result = {
             "data": [],
             "details": []
@@ -89,31 +90,50 @@ class AppIpService:
 
         if len(country) > 0:
             max_value = max(country_max['distance'] for country_max in country)
-            min_value = min(country_max['distance'] for country_max in country)
-            value_max = self.get_list_country(max_value, country)
-            value_min = self.get_list_country(min_value, country)
+            min_value = min(country_min['distance'] for country_min in country)
+            value_max = self.get_list_country(max_value, country, 'distance')
+            value_min = self.get_list_country(min_value, country, 'distance')
+            value_country_user = self.get_list_country(string.capwords(name), country, 'country')
+
+
             distance_close = {
                 "ip": value_max[0]['ip'],
-                "country": value_max[0]['country'],
-                "mean_invocation": self.sum_values(value_max)
+                "country": value_max[0]['country']
             }
 
             distance_far = {
                 "ip": value_min[0]['ip'],
-                "country": value_min[0]['country'],
-                "mean_invocation": self.sum_values(value_min)
+                "country": value_min[0]['country']
             }
 
             data_result ={
-                "ip_close": distance_close,
-                "ip_far": distance_far
+                "ip_max": distance_close,
+                "ip_min": distance_far,
+                "country_select": value_country_user
             }
-            result['data'].append(data_result)
+            result['data'].append(self.get_complements_country(data_result, value_min, value_max))
         self.insert_log_user()    
+        return result
+
+    def get_complements_country(self, country, value_min, value_max):
+        result = {
+            "ip_close" : country['ip_max'],
+            "ip_far": country['ip_min'],
+            "ip_selected": {}
+        }
+        if len(country['country_select']) > 0:
+            if country['ip_min']['country'] == country['country_select'][0]['country']:
+               result['ip_far']['distance_average'] = self.sum_values(value_min)
+            elif country['ip_max']['country'] == country['country_select'][0]['country']:
+               result['ip_close']['distance_average'] = self.sum_values(value_max)
+            else:
+                result['ip_selected']['ip'] = country['country_select'][0]['ip']
+                result['ip_selected']['country'] = country['country_select'][0]['country']
+                result['ip_selected']['distance_average'] = self.sum_values(country['country_select'])
         return result    
 
-    def get_list_country(self, value, country):
-        list_value = [data for data in country if data['distance'] == value]
+    def get_list_country(self, value, country, column_name):
+        list_value = [data for data in country if data[column_name] == value]
         list_final = sorted(list_value, key=lambda country: country['invocation'], reverse=True)  
         return list_final
 

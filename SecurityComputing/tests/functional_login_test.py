@@ -36,6 +36,7 @@ class TestLogin(unittest.TestCase):
         data = json.loads(get.get_data())
         self.headers['Token'] = data['data'][0]['token']
         self.assertGreater(len(data), 0)
+        self.assertIsInstance(data, dict)
 
     def test_close_session(self):
         """ Test the response object"""
@@ -43,7 +44,8 @@ class TestLogin(unittest.TestCase):
         get = self.app.get(self.url+method, headers=self.headers)
         self.assertEqual(get.status_code, 200)
         data = json.loads(get.get_data())
-        self.assertGreater(len(data), 0)    
+        self.assertGreater(len(data), 0) 
+        self.assertIsInstance(data, dict)   
 
 if __name__ == '__main__':
     unittest.main()

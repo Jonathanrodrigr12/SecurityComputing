@@ -52,6 +52,10 @@
               type: "string"
               name: "Token"
               required: true
+            - in: "query"
+              type: "string"
+              name: "name"
+              required: true  
           responses:
             '200':
               description: response result successful

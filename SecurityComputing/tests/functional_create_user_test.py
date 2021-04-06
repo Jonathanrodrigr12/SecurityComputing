@@ -34,7 +34,8 @@ class TestCreateUser(unittest.TestCase):
         get = self.app.post(self.url+self.METHOD, json=params)
         self.assertEqual(get.status_code, 400)
         data = json.loads(get.get_data())
-        self.assertGreater(len(data), 0)  
+        self.assertGreater(len(data), 0) 
+        self.assertIsInstance(data, dict) 
 
     def test_create_user_with_new_user(self):
         """ Test the response object"""
@@ -43,6 +44,7 @@ class TestCreateUser(unittest.TestCase):
         self.assertEqual(get.status_code, 200)
         data = json.loads(get.get_data())
         self.assertGreater(len(data), 0)
+        self.assertIsInstance(data, dict)
 
     def test_create_user_without_user(self):
         """ Test the response object"""
@@ -50,7 +52,8 @@ class TestCreateUser(unittest.TestCase):
         get = self.app.post(self.url+self.METHOD, json=params)
         self.assertEqual(get.status_code, 400)
         data = json.loads(get.get_data())
-        self.assertGreater(len(data), 0)     
+        self.assertGreater(len(data), 0)   
+        self.assertIsInstance(data, dict)  
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,6 +8,7 @@ from pyms.constants import CONFIGMAP_FILE_ENVIRONMENT
 class TestAppIp(unittest.TestCase):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     IP_EXAMPLE = "83.44.196.93"
+    COUNTRY = "España"
     @classmethod
     def setUpClass(cls):
         "set up test fixtures"
@@ -36,14 +37,17 @@ class TestAppIp(unittest.TestCase):
         self.assertEqual(get.status_code, 200)
         data = json.loads(get.get_data())
         self.assertGreater(len(data), 0)
+        self.assertIsInstance(data, dict)
 
     def test_get_country(self):
         """ Test the response object"""
-        method = "/get_country"
+        method = "/get_country?name={}"\
+            .format(self.COUNTRY)
         get = self.app.get(self.url+method, headers=self.headers)
         self.assertEqual(get.status_code, 200)
         data = json.loads(get.get_data())
-        self.assertGreater(len(data), 0)    
+        self.assertGreater(len(data), 0) 
+        self.assertIsInstance(data, dict)   
 
 if __name__ == '__main__':
     unittest.main()
