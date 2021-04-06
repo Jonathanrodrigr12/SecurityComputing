@@ -27,6 +27,7 @@ class LoginService:
             options={"filters":
                              [['email', "equals", data['user'].lower()]]
                              })
+        print(len(result))                 
         if not self.validation_login(result, data['password']):
             results['details'].append(
                 {

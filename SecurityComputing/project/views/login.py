@@ -8,6 +8,7 @@ def login():
         result = LoginService().login(request_data)
     except Exception as exception:
         result = exception.args[0]
+        print(result)
         return result
     return result
 

@@ -10,7 +10,6 @@ from project.resources.utils.registry_utils import RegistryUtils
 class PostgreSqlContext():
 
     __session_maker = None
-    PARAMETER = "%s:%s%s"
 
     def __init__(self, connection_string_name):
         self.configure(connection_string_name)
@@ -32,13 +31,15 @@ class PostgreSqlContext():
 
         connection_string_parts = connection_string.split(",")
 
+        if len(connection_string_parts) != 3 and\
+           len(connection_string_parts) != 4:
+            raise Exception("")
+
         database_system = connection_string_parts[0]
 
         driver = connection_string_parts[1]
 
-        parameters = self.PARAMETER % (ConfigurationManger.get_config('USER'), 
-            ConfigurationManger.get_config('PASSWORD'),
-            connection_string_parts[2])
+        parameters = connection_string_parts[2]
 
         configurations = ""
 

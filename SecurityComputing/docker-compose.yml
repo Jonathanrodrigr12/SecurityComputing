@@ -24,7 +24,5 @@ services:
     build: .
     networks:
       - api2
-    env_file:
-      - ./enviroments.env
 networks:
     api2:
