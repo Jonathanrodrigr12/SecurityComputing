@@ -62,7 +62,7 @@
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/result_ip'
+                  $ref: '#/definitions/result_country'
           x-swagger-router-controller: "project.views.app_ip"
     /close_session:
       get:
@@ -163,13 +163,30 @@
         data:
           type: "array"
           items:
-            $ref: '#/definitions/AppIp'
+            $ref: '#/definitions/InformationIp'
         details:
           type: "array"
           items:
               $ref: '#/definitions/responseDetail'
         method:
           type: "string"
+    result_country:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/result_country'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"      
     result_user:
       type: "object"
       properties:
@@ -224,7 +241,36 @@
           example: "83.44.196.93"  
         iso_code:
           type: "string"
-          example: "ES"    
+          example: "ES"
+    result_country:
+      description: "InformationIp."
+      type: "object"
+      properties:
+        ip_close:
+          type: "array"
+          items:
+            $ref: '#/definitions/country'
+        ip_far:
+          type: "array"
+          items:
+            $ref: '#/definitions/country'
+        ip_selected:
+          type: "array"
+          items:
+            $ref: '#/definitions/country'
+    country:
+      description: "InformationIp."
+      type: "object"
+      properties:
+        country:
+          type: "string"
+          example: "España"
+        ip:
+          type: "string"
+          example: "192.168.1.1"
+        distance_average:
+          type: "integer"
+          example: 10252         
     UserLogin:
       description: "Login Users."
       type: "object"
@@ -239,23 +285,9 @@
       description: "Login"
       type: "object"
       properties:
-        name:
-          type: "string"
-          example: "admi"
-        role:
-          type: "integer"
-          example: 1
         token:
           type: "string"
-          example: "admi"          
-    AppIp:
-      description: "App Ip"
-      type: "object"
-      properties:
-        role:
-          type: "array"
-          items:
-            $ref: '#/definitions/InformationIp' 
+          example: "admi"
     CreateUser:
       description: "Role Security"
       type: "object"
@@ -284,14 +316,14 @@
         method:
           type: "string"
     authenticated:
-      description: "Role Security"
+      description: "Security"
       type: "object"
       properties:
         authenticator:
           type: "boolean"
           example: "true"
     responseCloseSession:
-      description: "Role Security"
+      description: "Security"
       type: "object"
       properties:
         key:
@@ -309,24 +341,7 @@
           example: "200"
         value:
           type: "string"
-          example: "usuario creado"
-    result_users:
-      type: "object"
-      properties:
-        apiVersion:
-          type: "string"
-        status:
-          type: "integer"
-        data:
-          type: "array"
-          items:
-            $ref: '#/definitions/Users'
-        details:
-          type: "array"
-          items:
-              $ref: '#/definitions/responseDetail'
-        method:
-          type: "string"
+          example: "user created"
     responseDetail:
       description: "responseDetail"
       type: "object"
@@ -336,33 +351,5 @@
           example: "404"
         name:
           type: "string"
-          example: "Error"  
-    Users:
-      description: "User"
-      type: "object"
-      properties:
-        id:
-          type: "integer"
-          example: 1
-        name:
-          type: "string"
-          example: "Jonathan" 
-        last_name:
-          type: "string"
-          example: "Rodriguez"
-        age:
-          type: "integer"
-          example: 1
-        profesion:
-          type: "string"
-          example: "Ingeniero"
-        email:
-          type: "string"
-          example: "Jonathanrodrigr@gmail.com"
-        phone:
-          type: "number"
-          example: 123
-        role_id:
-          type: "integer"
-          example: 1
+          example: "Error"
       
